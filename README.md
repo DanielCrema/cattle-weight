@@ -47,9 +47,21 @@ POST /predict
 ```json
 {
   "peso_estimado_kg": 520.4,
-  "versao_modelo": "v1"
+  "versao_modelo": "v1",
+  "analise": {
+    "classificacao_peso": "adequado",
+    "nivel_risco": "baixo",
+    "recomendacoes": [
+      "Manter alimentação equilibrada",
+      "Monitorar crescimento mensalmente",
+      "Garantir acesso a água limpa"
+    ],
+    "insights": {
+      "comparacao_raca": "O peso está dentro da média esperada para a raça Angus com essa idade",
+      "observacoes": "O animal apresenta bom desenvolvimento, sem sinais de sobrepeso ou baixo peso"
+    }
+  }
 }
-```
 
 ---
 
@@ -184,6 +196,8 @@ O projeto pode ser integrado com n8n para:
 ├── export/       # Módulo com funções para exportar modelos, artefatos e documentações
 │
 ├── helpers/      # Funções auxiliares de parseamento e plotagem
+│
+├── LLM/          # Agente(s) de IA para análise de gado
 │
 ├── models/       # Repositório de modelos
 │
