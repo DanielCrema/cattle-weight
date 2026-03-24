@@ -11,7 +11,8 @@ def export_model_artifact(
     encoder,
     categorical_cols: list,
     filename: str,
-    timestamp: bool = False
+    timestamp: bool = False,
+    deploy_model: bool = True
 ) -> str:
     '''
     Exporta um artifact completo contendo modelo, encoder e metadados.
@@ -65,7 +66,8 @@ def export_model_artifact(
         "encoder": encoder,
         "categorical_cols": categorical_cols,
         "created_at": datetime.now().isoformat(),
-        "version": filename
+        "filename": filename,
+        "version": current_version
     }
 
     print("Artifact:\n")
@@ -81,10 +83,12 @@ def export_model_artifact(
 
     model_artifact_filename = f"{filename}.pkl"
 
-    # 🔄 Atualiza variável de ambiente
-    update_env_variable(file_path = ".env", key = "MODEL_ARTIFACT_NAME", new_value = model_artifact_filename)
-
     # 📝 Log de versionamento
     log_version_control(model_artifact_filename = model_artifact_filename)
+
+    if deploy_model:
+        # 🔄 Atualiza variável de ambiente
+        update_env_variable(file_path = ".env", key = "MODEL_ARTIFACT_NAME", new_value = filename)
+        print(f"✅ Modelo deployado em produção!\n")
 
     return model_artifact_filename

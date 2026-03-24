@@ -1,0 +1,8 @@
+{
+    "event": "model_version_update",
+    "message": "New model deployed. Previous: 'cattle_weight_model_artifact_v1_20260322_223910.pkl' → New: 'cattle_weight_model_artifact_v2_20260324_184849.pkl'",
+    "previous_model_artifact": "cattle_weight_model_artifact_v1_20260322_223910.pkl",
+    "new_model_artifact": "cattle_weight_model_artifact_v2_20260324_184849.pkl",
+    "timestamp": "2026-03-24T18:48:49.384127",
+    "version": 2
+}
