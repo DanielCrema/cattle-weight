@@ -13,6 +13,7 @@ A solução simula um cenário real do setor agropecuário, onde a pesagem manua
 - 🔄 Base para automação com n8n
 - 🧠 Pipeline completo de Data Science documentado
 - ✅ Versionamento inteligente e deploy automatizado com pipeline CI/CD
+- 🧪 Testes automatizados garantindo robustez da API, modelo preditivo e LLM
 
 
 ## 🔌 Como usar a API
@@ -97,38 +98,38 @@ response = requests.post(url, json=data, headers=headers)
 print(response.json())
 ```
 
+## 🧠 Pipeline de Data Science
 
-## 🎯 Objetivo do Projeto
+### 🎯 Objetivo do Projeto
 
 Criar um modelo de regressão que, a partir de características físicas do gado, estima o **peso do animal em quilogramas (kg)** de forma automatizada e consistente.
 
-
-## 🧠 Pipeline de Data Science
+### 🧩 Etapas do Pipeline
 
 O [**notebook do projeto**](main.ipynb) cobre as principais etapas:
 
-### 1. ETL e limpeza dos dados
+#### 1. ETL e limpeza dos dados
 - Carregamento dos datasets
 - Padronização e tipagem
 
-### 2. Análise exploratória (EDA)
+#### 2. Análise exploratória (EDA)
 - Distribuições das variáveis
 - Correlações
 - Relações com a variável alvo
 
-### 3. Engenharia de variáveis
+#### 3. Engenharia de variáveis
 - Encoding de variáveis categóricas
 - Pipeline automatizado com Oracle AutoMLx
 
-### 4. Modelagem
+#### 4. Modelagem
 - Treinamento com AutoMLx
 - Comparação entre modelos
 - Seleção automática
 
-### 5. Avaliação
+#### 5. Avaliação
 - MAE, RMSE e R²
 
-### 6. Exportação
+#### 6. Exportação
 - Modelo salvo via `pickle`
 - Pronto para uso em produção
 - Pipeline CI/CD automatizado
@@ -137,7 +138,7 @@ O [**notebook do projeto**](main.ipynb) cobre as principais etapas:
   - Deploy
 
 
-## 📊 Resultados
+### 📊 Resultados
 
 | Modelo                | MAE ↓ (kg) | RMSE ↓ (kg) | R² ↑    |
 |----------------------|-----------|------------|--------|
@@ -177,6 +178,22 @@ O projeto pode ser integrado com n8n para:
 - Aplicar regras de decisão
 - Enviar notificações (WhatsApp, email, etc.)
 
+## ✔️ Tipos de testes implementados
+
+- **Testes de API (integração)**
+  - Validação do endpoint `/predict`
+  - Verificação de status HTTP e estrutura da resposta
+  - Teste com diferentes inputs (raça, idade, medidas, etc.)
+
+- **Testes do modelo de Machine Learning**
+  - Consistência das predições
+  - Validação do pipeline (encoder + modelo)
+  - Garantia de que o modelo carregado está funcional
+
+- **Testes da integração com LLM**
+  - Validação da estrutura da resposta gerada pela IA
+  - Teste de fallback em caso de erro (ex: limite de quota / falha externa)
+  - Garantia de que a API continua respondendo mesmo sem o LLM
 
 ## 📁 Estrutura do Projeto
 
@@ -227,9 +244,9 @@ uvicorn API.endpoint:app --reload
 ## 💡 Possíveis melhorias
 
 - Deploy em cloud (AWS, GCP)
-- Versionamento automatizado de modelos
 - Monitoramento de drift
 - Aprimorar o pipeline CI/CD
+- Abordagem MLOps
 
 
 ## 📌 Conclusão
