@@ -2,6 +2,7 @@ import os
 import re
 import pickle
 import pandas as pd
+from version_control.get_model_version import get_model_version
 
 
 def validate_features(df: pd.DataFrame, estimator) -> None:
@@ -70,12 +71,11 @@ def predict_weight(model_artifact_filename: str, input_data: dict) -> dict:
     categorical_cols = artifact["categorical_cols"]
 
     # 🔍 Extrair versão do nome do arquivo (ex: "cattle_weight_model_v1" → v1)
-    match = re.search(r"_v(\d+)", model_artifact_filename)
-    
-    version = "not found"
-    if match:
-        version = int(match.group(1))
+    version = get_model_version(model_artifact_filename)
+    if version != 0:
         version = f"v{version}"
+    else:
+        version = "not found"
 
     # 🔄 Transform input (já com encoding)
     x = transform_input(input_data, encoder, categorical_cols)

@@ -1,6 +1,9 @@
 import os
 import pickle
 from datetime import datetime
+from version_control.get_model_version import get_model_version
+from version_control.update_env_variable import update_env_variable
+from version_control.log_version_control import log_version_control
 
 
 def export_model_artifact(
@@ -44,6 +47,11 @@ def export_model_artifact(
     models_dir = os.path.abspath(models_dir)
     os.makedirs(models_dir, exist_ok=True)
 
+    # 🔢 Gerencia versão automaticamente
+    previous_model_version = get_model_version()
+    current_version = previous_model_version + 1
+    filename = f"{filename}_v{current_version}"
+
     # 🕒 Timestamp opcional
     if timestamp:
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -71,4 +79,12 @@ def export_model_artifact(
     print("\n📦 Artifact salvo com sucesso:")
     print(f"   → ./models/{filename}.pkl\n")
 
-    return f"{filename}.pkl"
+    model_artifact_filename = f"{filename}.pkl"
+
+    # 🔄 Atualiza variável de ambiente
+    update_env_variable(file_path = ".env", key = "MODEL_ARTIFACT_NAME", new_value = model_artifact_filename)
+
+    # 📝 Log de versionamento
+    log_version_control(model_artifact_filename = model_artifact_filename)
+
+    return model_artifact_filename
