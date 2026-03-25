@@ -213,11 +213,13 @@ O projeto pode ser integrado com n8n para:
 │
 ├── tests/            # Repositório de testes automatizados
 │
-├── ml_utils/            # Utilitários de ML
+├── ml_utils/         # Utilitários de ML
 │
 ├── version_control/  # Funções e logs de controle de versão
 │
 ├── main.ipynb        # Notebook principal
+│
+├── format_output.py.example   # Formatação para saída via chatbots (whatsapp etc.)
 │
 └── loader.py         # Classe para carregar e armazenar informações dos datasets de entrada
 ```

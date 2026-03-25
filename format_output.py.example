@@ -1,0 +1,85 @@
+def format_output(api_response):
+    peso_estimado = api_response.get("peso_estimado_kg")
+    classificacao_peso = api_response.get("analise", {}).get("classificacao_peso")
+    nivel_risco = api_response.get("analise", {}).get("nivel_risco")
+    recomendacoes = api_response.get("analise", {}).get("recomendacoes", [])
+
+    insights = api_response.get("analise", {}).get("insights", {})
+    comparacao_raca = insights["comparacao_raca"]
+    observacoes = insights["observacoes"]
+
+    versao_modelo = api_response.get("versao_modelo")
+    
+    formatted_output = ""
+    
+    # Header
+    formatted_output += "📊 *Resultado da Análise do Animal*\n\n"
+    
+    # Resumo
+    formatted_output += "🐄 *Resumo Geral*\n"
+    formatted_output += f"• *Peso estimado:* {peso_estimado} kg\n"
+
+    # Fallback para quando a LLM falha
+    if comparacao_raca == "Erro na análise":
+        formatted_output += "\n⚠️ *Análise com IA indisponível no momento*\n"
+        formatted_output += "• Não foi possível gerar a análise inteligente neste momento.\n"
+        formatted_output += "• Por favor, tente novamente mais tarde.\n"
+
+    else:
+        formatted_output += f"• *Classificação de peso:* {classificacao_peso.capitalize()}\n"
+        formatted_output += f"• *Nível de risco:* {nivel_risco.capitalize()}\n\n"
+    
+        # Recomendações
+        formatted_output += "📌 *Recomendações*\n"
+        for rec in recomendacoes:
+            formatted_output += f"• {rec}\n"
+        
+        # Insights
+        formatted_output += "\n🔎 *Insights Técnicos*\n"
+        formatted_output += f"• *Comparação Raça:* {comparacao_raca}\n"
+        formatted_output += f"• *Observações:* {observacoes}\n"
+    
+    # Rodapé com versão do modelo
+    formatted_output += f"\n\n🤖 *Modelo:* \nCattle Weight {versao_modelo}"
+    
+    return formatted_output
+
+
+MOCK_API_RESPONSE = {
+  "peso_estimado_kg": 520.4,
+  "versao_modelo": "v1",
+  "analise": {
+    "classificacao_peso": "adequado",
+    "nivel_risco": "baixo",
+    "recomendacoes": [
+      "Manter alimentação equilibrada",
+      "Monitorar crescimento mensalmente",
+      "Garantir acesso a água limpa"
+    ],
+    "insights": {
+      "comparacao_raca": "O peso está dentro da média esperada para a raça Angus com essa idade",
+      "observacoes": "O animal apresenta bom desenvolvimento, sem sinais de sobrepeso ou baixo peso"
+    }
+  }
+}
+
+MOCK_API_RESPONSE_AI_ERROR = {
+    "peso_estimado_kg": 487.2,
+    "versao_modelo": "v1",
+    "analise": {
+        "classificacao_peso": "baixo",  # valor padrão do fallback (não será exibido)
+        "nivel_risco": "baixo",         # valor padrão do fallback (não será exibido)
+        "recomendacoes": [],
+        "insights": {
+            "comparacao_raca": "Erro na análise",
+            "observacoes": "Falha ao processar resposta da LLM (formato inválido)"
+        }
+    }
+}
+
+
+formatted_result = format_output(MOCK_API_RESPONSE)
+formatted_result_ai_error = format_output(MOCK_API_RESPONSE_AI_ERROR)
+print(formatted_result)
+print(f"\n\n{20 * '-'}\n\n")
+print(formatted_result_ai_error)
