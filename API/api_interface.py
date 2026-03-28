@@ -5,13 +5,13 @@ from pydantic import BaseModel
 # INPUT
 # =========================
 class PredictRequest(BaseModel):
-    raca: str
+    raca: Literal["Angus", "Nelore", "Hereford", "Brahman"]
     idade_meses: int
     altura_cm: float
     comprimento_corpo_cm: float
     circunferencia_peito_cm: float
-    cor_pelagem: str
-    sexo: str
+    cor_pelagem: Literal["marrom", "preta", "branca"]
+    sexo: Literal["macho", "femea"]
 
 # =========================
 # OUTPUT
