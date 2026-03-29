@@ -8,7 +8,7 @@ A solução simula um cenário real do setor agropecuário, onde a pesagem manua
 https://github.com/DanielCrema/cattle-weight-frontend
 
 🎥 **Demo do Projeto:**  
-https://www.youtube.com/watch?v=EFLilugI94s  
+https://youtu.be/EytdX4o4t4M  
 
 ## 🚀 O que este projeto entrega
 
