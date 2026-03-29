@@ -291,6 +291,9 @@ Mais do que um modelo preditivo, o CattleWeight representa um **produto funciona
 
 Evidenciando não apenas capacidade técnica, mas também **visão de produto e aplicação real de IA em negócios**.
 
+## 📝 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 ## *Special thanks* to:  
 🕋🤲 **Almighty God** (ﷻ), for having given me intelligence and persistence to persevere.
 
